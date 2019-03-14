@@ -63,8 +63,8 @@
     <Reference Include="restlessmedia.Module.Category, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\restlessmedia.Module.Category.0.1.0\lib\net452\restlessmedia.Module.Category.dll</HintPath>
     </Reference>
-    <Reference Include="restlessmedia.Module.Data.EF, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\restlessmedia.Module.Data.EF.0.1.0\lib\net452\restlessmedia.Module.Data.EF.dll</HintPath>
+    <Reference Include="restlessmedia.Module.Data.EF, Version=0.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\restlessmedia.Module.Data.EF.0.3.0\lib\net452\restlessmedia.Module.Data.EF.dll</HintPath>
     </Reference>
     <Reference Include="restlessmedia.Module.File, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\restlessmedia.Module.File.1.1.0\lib\net452\restlessmedia.Module.File.dll</HintPath>

@@ -1,4 +1,5 @@
 ﻿using restlessmedia.Module.Data;
+using restlessmedia.Module.Data.EF;
 using System.Data.Entity;
 
 namespace restlessmedia.Module.Blog.Data
@@ -14,6 +15,12 @@ namespace restlessmedia.Module.Blog.Data
       {
         return Set<VPost>();
       }
+    }
+
+    protected override void Configure(DbModelBuilder modelBuilder)
+    {
+      base.Configure(modelBuilder);
+      modelBuilder.Configurations.Add(new LicensedEntityConfiguration<VPost>());
     }
   }
 }
