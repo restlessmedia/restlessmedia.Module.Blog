@@ -2,7 +2,7 @@
 using restlessmedia.Module.Category;
 using restlessmedia.Module.Configuration;
 using restlessmedia.Module.Data;
-using restlessmedia.Module.Security.Data.Sql;
+using restlessmedia.Module.Data.Sql;
 using SqlBuilder;
 using SqlBuilder.DataServices;
 using System;
