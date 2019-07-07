@@ -81,8 +81,8 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="restlessmedia.Module, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\restlessmedia.Module.1.4.0\lib\net452\restlessmedia.Module.dll</HintPath>
+    <Reference Include="restlessmedia.Module, Version=1.17.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\restlessmedia.Module.1.17.0\lib\net452\restlessmedia.Module.dll</HintPath>
     </Reference>
     <Reference Include="restlessmedia.Module.Category, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\restlessmedia.Module.Category.1.2.0\lib\net452\restlessmedia.Module.Category.dll</HintPath>
@@ -93,11 +93,11 @@
     <Reference Include="restlessmedia.Module.File, Version=1.13.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\restlessmedia.Module.File.1.13.0\lib\net452\restlessmedia.Module.File.dll</HintPath>
     </Reference>
-    <Reference Include="SqlBuilder, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SqlBuilder.1.10.0\lib\net452\SqlBuilder.dll</HintPath>
+    <Reference Include="SqlBuilder, Version=1.16.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlBuilder.1.16.0\lib\net452\SqlBuilder.dll</HintPath>
     </Reference>
-    <Reference Include="SqlBuilder.DataServices, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SqlBuilder.DataServices.1.2.0\lib\net452\SqlBuilder.DataServices.dll</HintPath>
+    <Reference Include="SqlBuilder.DataServices, Version=1.10.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SqlBuilder.DataServices.1.10.0\lib\net452\SqlBuilder.DataServices.dll</HintPath>
     </Reference>
     <Reference Include="StackExchange.Redis.StrongName, Version=1.2.6.0, Culture=neutral, PublicKeyToken=c219ff1ca8c2ce46, processorArchitecture=MSIL">
       <HintPath>..\packages\StackExchange.Redis.StrongName.1.2.6\lib\net45\StackExchange.Redis.StrongName.dll</HintPath>
@@ -133,7 +133,6 @@
     <Compile Include="Data\DatabaseContext.cs" />
     <Compile Include="Data\DataModel\VPost.cs" />
     <Compile Include="Data\IBlogDataProvider.cs" />
-    <Compile Include="Data\PostRepository.cs" />
     <Compile Include="Data\VPost.cs" />
     <Compile Include="IBlogService.cs" />
     <Compile Include="IPost.cs" />

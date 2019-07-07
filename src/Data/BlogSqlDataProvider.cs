@@ -13,10 +13,10 @@ namespace restlessmedia.Module.Blog.Data
 {
   internal class BlogSqlDataProvider : SqlDataProviderBase
   {
-    internal BlogSqlDataProvider(IDataContext context, IModelDataProvider<DataModel.VPost> modelDataProvider, ILicenseSettings licenseSettings)
+    internal BlogSqlDataProvider(IDataContext context, IModelDataService<DataModel.VPost> modelDataService, ILicenseSettings licenseSettings)
       : base(context)
     {
-      _modelDataProvider = modelDataProvider ?? throw new ArgumentNullException(nameof(modelDataProvider));
+      _modelDataService = modelDataService ?? throw new ArgumentNullException(nameof(modelDataService));
       _licenseSettings = licenseSettings ?? throw new ArgumentNullException(nameof(licenseSettings));
     }
 
@@ -28,10 +28,10 @@ namespace restlessmedia.Module.Blog.Data
     public T Read<T>(int postId)
       where T : IPost
     {
-      Select<DataModel.VPost> select = _modelDataProvider.NewSelect();
+      Select<DataModel.VPost> select = _modelDataService.DataProvider.NewSelect();
       select.Where(x => x.PostId, postId);
 
-      IDynamicMetaObjectProvider post = _modelDataProvider.QueryDynamic(select, connection => select.WithLicenseId(connection, _licenseSettings)).FirstOrDefault();
+      IDynamicMetaObjectProvider post = _modelDataService.DataProvider.QueryDynamic(select, connection => select.WithLicenseId(connection, _licenseSettings)).FirstOrDefault();
 
       return ObjectMapper.Map<IDynamicMetaObjectProvider, T>(post, config =>
       {
@@ -41,32 +41,24 @@ namespace restlessmedia.Module.Blog.Data
 
     public void Save(PostEntity post)
     {
-      using (DatabaseContext context = CreateDatabaseContext())
+      if (post.PostId.HasValue)
       {
-        PostRepository postRepository = new PostRepository(context);
-        VPost dataModel = postRepository.Save(post);
-
-        context.SaveChanges();
-
-        if (!post.PostId.HasValue)
-        {
-          post.PostId = dataModel.PostId;
-        }
+        Update(post);
+      }
+      else
+      {
+        Create(post);
       }
     }
 
     public void Delete(int postId)
     {
-      using (DatabaseContext context = CreateDatabaseContext())
-      {
-        PostRepository postRepository = new PostRepository(context);
-        postRepository.Delete(postId);
-      }
+      _modelDataService.Delete(postId);
     }
 
     public ModelCollection<PostEntity> List(int page, int maxPerPage, int? categoryId = null)
     {
-      Select<DataModel.VPost> select = _modelDataProvider.NewSelect();
+      Select<DataModel.VPost> select = _modelDataService.DataProvider.NewSelect();
       select.Paging(page, maxPerPage);
       select.IncludeCount(true);
 
@@ -75,16 +67,28 @@ namespace restlessmedia.Module.Blog.Data
         select.Where(x => x.CategoryId, categoryId);
       }
 
-      DataPage<dynamic> dataPage = _modelDataProvider.QueryPage<dynamic>(select, connection => select.WithLicenseId(connection, _licenseSettings));
+      DataPage<dynamic> dataPage = _modelDataService.DataProvider.QueryPage<dynamic>(select, connection => select.WithLicenseId(connection, _licenseSettings));
       return new ModelCollection<PostEntity>(ObjectMapper.MapAll<PostEntity>(dataPage.Data), dataPage.Count);
     }
 
     public T Latest<T>()
       where T : PostEntity
     {
-      Select<DataModel.VPost> select = _modelDataProvider.NewSelect();
+      Select<DataModel.VPost> select = _modelDataService.DataProvider.NewSelect();
       select.Paging(1, 1);
-      return ObjectMapper.Map<T>(_modelDataProvider.QueryDynamic(select, connection => select.WithLicenseId(connection, _licenseSettings)).FirstOrDefault());
+      return ObjectMapper.Map<T>(_modelDataService.DataProvider.QueryDynamic(select, connection => select.WithLicenseId(connection, _licenseSettings)).FirstOrDefault());
+    }
+
+    public void Create(PostEntity post)
+    {
+      DataModel.VPost dataModel = ObjectMapper.Map<PostEntity, DataModel.VPost>(post);
+      _modelDataService.Create(dataModel);
+    }
+
+    public void Update(PostEntity post)
+    {
+      DataModel.VPost dataModel = ObjectMapper.Map<PostEntity, DataModel.VPost>(post);
+      _modelDataService.Update(post.PostId, dataModel);
     }
 
     protected DatabaseContext CreateDatabaseContext(bool autoDetectChanges = false)
@@ -92,7 +96,7 @@ namespace restlessmedia.Module.Blog.Data
       return new DatabaseContext(DataContext, autoDetectChanges);
     }
 
-    private readonly IModelDataProvider<DataModel.VPost> _modelDataProvider;
+    private readonly IModelDataService<DataModel.VPost> _modelDataService;
 
     private readonly ILicenseSettings _licenseSettings;
   }
