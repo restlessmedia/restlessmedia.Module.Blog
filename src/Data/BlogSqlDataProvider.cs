@@ -13,11 +13,10 @@ namespace restlessmedia.Module.Blog.Data
 {
   internal class BlogSqlDataProvider : SqlDataProviderBase
   {
-    internal BlogSqlDataProvider(IDataContext context, IModelDataService<DataModel.VPost> modelDataService, ILicenseSettings licenseSettings)
+    internal BlogSqlDataProvider(IDataContext context, IModelDataService<DataModel.VPost> modelDataService)
       : base(context)
     {
       _modelDataService = modelDataService ?? throw new ArgumentNullException(nameof(modelDataService));
-      _licenseSettings = licenseSettings ?? throw new ArgumentNullException(nameof(licenseSettings));
     }
 
     public PostEntity Read(int postId)
@@ -31,7 +30,7 @@ namespace restlessmedia.Module.Blog.Data
       Select<DataModel.VPost> select = _modelDataService.DataProvider.NewSelect();
       select.Where(x => x.PostId, postId);
 
-      IDynamicMetaObjectProvider post = _modelDataService.DataProvider.QueryDynamic(select, connection => select.WithLicenseId(connection, _licenseSettings)).FirstOrDefault();
+      IDynamicMetaObjectProvider post = _modelDataService.DataProvider.QueryDynamic(select, connection => select.WithLicenseId(connection, DataContext.LicenseSettings)).FirstOrDefault();
 
       return ObjectMapper.Map<IDynamicMetaObjectProvider, T>(post, config =>
       {
@@ -67,7 +66,7 @@ namespace restlessmedia.Module.Blog.Data
         select.Where(x => x.CategoryId, categoryId);
       }
 
-      DataPage<dynamic> dataPage = _modelDataService.DataProvider.QueryPage<dynamic>(select, connection => select.WithLicenseId(connection, _licenseSettings));
+      DataPage<dynamic> dataPage = _modelDataService.DataProvider.QueryPage<dynamic>(select, connection => select.WithLicenseId(connection, DataContext.LicenseSettings));
       return new ModelCollection<PostEntity>(ObjectMapper.MapAll<PostEntity>(dataPage.Data), dataPage.Count);
     }
 
@@ -76,7 +75,7 @@ namespace restlessmedia.Module.Blog.Data
     {
       Select<DataModel.VPost> select = _modelDataService.DataProvider.NewSelect();
       select.Paging(1, 1);
-      return ObjectMapper.Map<T>(_modelDataService.DataProvider.QueryDynamic(select, connection => select.WithLicenseId(connection, _licenseSettings)).FirstOrDefault());
+      return ObjectMapper.Map<T>(_modelDataService.DataProvider.QueryDynamic(select, connection => select.WithLicenseId(connection, DataContext.LicenseSettings)).FirstOrDefault());
     }
 
     public void Create(PostEntity post)
@@ -91,13 +90,6 @@ namespace restlessmedia.Module.Blog.Data
       _modelDataService.Update(post.PostId, dataModel);
     }
 
-    protected DatabaseContext CreateDatabaseContext(bool autoDetectChanges = false)
-    {
-      return new DatabaseContext(DataContext, autoDetectChanges);
-    }
-
     private readonly IModelDataService<DataModel.VPost> _modelDataService;
-
-    private readonly ILicenseSettings _licenseSettings;
   }
 }

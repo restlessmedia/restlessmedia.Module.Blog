@@ -22,7 +22,7 @@ namespace restlessmedia.Module.Blog.UnitTest
       IDataContext dataContext = A.Fake<IDataContext>();
       IModelDataService<Data.DataModel.VPost> modelDataService = A.Fake<IModelDataService<Data.DataModel.VPost>>();
       ILicenseSettings licenseSettings = A.Fake<ILicenseSettings>();
-      BlogSqlDataProvider blogSqlDataProvider = new BlogSqlDataProvider(dataContext, modelDataService, licenseSettings);
+      BlogSqlDataProvider blogSqlDataProvider = new BlogSqlDataProvider(dataContext, modelDataService);
       return blogSqlDataProvider;
     }
   }
