@@ -5,7 +5,7 @@
     <Product>restlessmedia.Module.Blog</Product>
     <Description>Module blog library.</Description>
     <Copyright>Copyright restlessmedia 2020</Copyright>
-    <Version>2.1.0</Version>
+    <Version>2.1.1</Version>
     <AssemblyVersion>2.0.0</AssemblyVersion>
     <FileVersion>2.0.0</FileVersion>
     <OutputPath>bin\$(Configuration)\</OutputPath>
@@ -42,7 +42,7 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="2.2.0" />
     <PackageReference Include="Microsoft.NETCore.Platforms" Version="2.2.0" />
-    <PackageReference Include="Microsoft.WindowsAzure.ConfigurationManager" Version="1.8.0.0" />
+    <PackageReference Include="Microsoft.WindowsAzure.ConfigurationManager" Version="2.0.3" />
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="restlessmedia.Module" Version="7.0.3" />
@@ -94,6 +94,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
 </Project>
+
 
 
 
