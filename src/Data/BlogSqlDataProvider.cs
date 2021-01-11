@@ -1,6 +1,5 @@
 ﻿using FastMapper;
 using restlessmedia.Module.Category;
-using restlessmedia.Module.Configuration;
 using restlessmedia.Module.Data;
 using restlessmedia.Module.Data.Sql;
 using SqlBuilder;
@@ -81,7 +80,8 @@ namespace restlessmedia.Module.Blog.Data
     public void Create(PostEntity post)
     {
       DataModel.VPost dataModel = ObjectMapper.Map<PostEntity, DataModel.VPost>(post);
-      _modelDataService.Create(dataModel);
+      int? postId = _modelDataService.Create(dataModel);
+      post.PostId = postId;
     }
 
     public void Update(PostEntity post)
